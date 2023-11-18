@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "survival1emotesclient",
+  "version": "${version}",
+
+  "name": "Emotes Mod Client",
+  "description": "Mod to use Emotes on the KFC's servers",
+  "authors": [
+    "fantomitechno (aka Simon R)"
+  ],
+
+  "license": "MIT",
+  "icon": "assets/survival1emotesclient/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "dev.renoux.survival1emotesclient.Survival1EmotesClient"
+    ]
+  },
+  "mixins": [
+    "survival1emotesclient.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": ">=1.20",
+    "java": ">=17"
+  }
+}

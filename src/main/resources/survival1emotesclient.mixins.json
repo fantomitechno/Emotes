@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "dev.renoux.survival1emotesclient.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "ClientPacketListenerMixin",
+    "FontManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "TranslatableContentsMixin"
+  ]
+}
