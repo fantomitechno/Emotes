@@ -1,3 +1,26 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2023 Simon RENOUX aka fantomitechno
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package dev.renoux.survival1emotesclient.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
@@ -5,7 +28,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static dev.renoux.survival1emotesclient.Survival1EmotesClient.MODID;
@@ -32,20 +54,19 @@ public class EmoteUtil {
         /// The order is important here. Emote font storage depends on the emote font.
         this.customImageFont = new CustomImageFont();
         this.customImageFontStorage = new CustomImageFontStorage(this.getCustomImageFont());
-
-        this.loadCache();
     }
 
-    public void loadCache() {
+    public void loadCache(String server) {
+        this.getCustomImageFont().clear();
         try {
-            CustomImageCache.CacheEntry[] allCachedFiles = CustomImageCache.getInstance().getAllCachedFiles();
+            CustomImageCache.CacheEntry[] allCachedFiles = CustomImageCache.getInstance().getAllCachedFiles(server);
             for (var entry : allCachedFiles) {
                 String id = entry.id();
                 if (id.equals("nul_")) {
                     id = "nul";
                 }
                 InputStream is = new FileInputStream(entry.path().toFile());
-                addImage(is, id, false);
+                addImage(server, is, id, false);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -63,13 +84,13 @@ public class EmoteUtil {
         return this.customImageFontStorage;
     }
 
-    public void addEmote(String emoteName, NativeImage image, boolean writeToDisk) throws Exception {
+    public void addEmote(String server, String emoteName, NativeImage image, boolean writeToDisk) throws Exception {
 
         if (writeToDisk) {
             if (emoteName.equals("nul")) {
-                image.writeToFile(CustomImageCache.getInstance().getPngFile("nul_"));
+                image.writeToFile(CustomImageCache.getInstance().getPngFile(server, "nul_"));
             } else {
-                image.writeToFile(CustomImageCache.getInstance().getPngFile(emoteName));
+                image.writeToFile(CustomImageCache.getInstance().getPngFile(server, emoteName));
             }
         }
 
@@ -91,9 +112,9 @@ public class EmoteUtil {
         this.idToCodepointHashMap.put(emoteName, codepoint);
     }
 
-    public void addImage(InputStream stream, String id, boolean writeToDisk) throws Exception {
+    public void addImage(String server, InputStream stream, String id, boolean writeToDisk) throws Exception {
         NativeImage image = NativeImage.read(stream);
-        addEmote(id, image, writeToDisk);
+        addEmote(server, id, image, writeToDisk);
     }
 
     private synchronized int getAndAdvanceCurrentCodepoint() {
