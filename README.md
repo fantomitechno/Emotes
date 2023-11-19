@@ -4,8 +4,6 @@ A mod to use emotes on the KFC's servers
 
 ## Installation
 Install [fabric](https://fabricmc.net/use/) (or Quilt) for 1.20.1\
-You can add:
-- [Mod Menu](https://modrinth.com/mod/modmenu) (to configure the mod but there's a button in the game menu to do it)
 
 Finally, get the mod from the releases tab or from the actions tab (for unstable versions)
 
