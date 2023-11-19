@@ -20,9 +20,6 @@ jobs:
     steps:
       - name: checkout repository
         uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-          token: ${{ secrets.GH_TOKEN }}
           
       - name: validate gradle wrapper
         uses: gradle/wrapper-validation-action@v1
