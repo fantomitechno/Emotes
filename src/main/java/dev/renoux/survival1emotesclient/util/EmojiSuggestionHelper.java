@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.renderer.Rect2i;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import org.apache.commons.codec.binary.StringUtils;
 
 import java.util.Locale;
@@ -146,7 +148,9 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
                 int pos = (this.index + i) % this.suggestions.getList().size();
                 final Suggestion suggestion = this.suggestions.getList().get(pos);
                 guiGraphics.fill(this.area.getX(), this.area.getY() + 12 * i, this.area.getX() + this.area.getWidth() + 15, this.area.getY() + 12 * i + 12, 0xD0000000);
-                guiGraphics.drawString(Minecraft.getInstance().font, suggestion.getText(), this.area.getX() + 1, this.area.getY() + 2 + 12 * i, pos == this.index ? 0xFFFFFF00 : 0xFFAAAAAA, true);
+                String emote = Character.toString(EmoteUtil.getInstance().getCodepoint(suggestion.getText().replaceAll(":", "")));
+                Component emoteComp = Component.literal(emote).withStyle(Style.EMPTY.withFont(EmoteUtil.CUSTOM_IMAGE_FONT_IDENTIFIER));
+                guiGraphics.drawString(Minecraft.getInstance().font, emoteComp, this.area.getX() + 1, this.area.getY() + 2 + 12 * i, pos == this.index ? 0xFFFFFF00 : 0xFFAAAAAA, false);
                 guiGraphics.drawString(Minecraft.getInstance().font, suggestion.getText(), 12 + this.area.getX() + 1, this.area.getY() + 2 + 12 * i, pos == this.index ? 0xFFFFFF00 : 0xFFAAAAAA, true);
             }
         }
