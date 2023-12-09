@@ -22,9 +22,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Function;
 
 public class CustomImageFont implements GlyphProvider {
-  private final CodepointMap<CustomImageGlyph> glyphs;
+  private CodepointMap<CustomImageGlyph> glyphs;
 
   public CustomImageFont() {
+    this.glyphs = new CodepointMap<>(CustomImageGlyph[]::new, CustomImageGlyph[][]::new);
+  }
+
+  public void reset() {
     this.glyphs = new CodepointMap<>(CustomImageGlyph[]::new, CustomImageGlyph[][]::new);
   }
 

@@ -35,15 +35,22 @@ public class CustomImageFontStorage extends FontSet implements AutoCloseable {
   private static final float MAX_ADVANCE = 32.0f;
   private final ResourceLocation id;
   private final GlyphProvider font;
-  private final CodepointMap<BakedGlyph> glyphRendererCache = new CodepointMap<>(BakedGlyph[]::new, BakedGlyph[][]::new);
-  private final CodepointMap<GlyphPair> glyphCache = new CodepointMap<>(GlyphPair[]::new, GlyphPair[][]::new);
-  private final Int2ObjectMap<IntList> charactersByWidth = new Int2ObjectOpenHashMap<>();
-  private final List<FontTexture> glyphAtlases = new ArrayList<>();
+  private CodepointMap<BakedGlyph> glyphRendererCache = new CodepointMap<>(BakedGlyph[]::new, BakedGlyph[][]::new);
+  private CodepointMap<GlyphPair> glyphCache = new CodepointMap<>(GlyphPair[]::new, GlyphPair[][]::new);
+  private Int2ObjectMap<IntList> charactersByWidth = new Int2ObjectOpenHashMap<>();
+  private List<FontTexture> glyphAtlases = new ArrayList<>();
 
   public CustomImageFontStorage(CustomImageFont customImageFontInstance) {
     super(null, null);
     this.id = EmoteUtil.CUSTOM_IMAGE_FONT_IDENTIFIER;
     this.font = customImageFontInstance;
+  }
+
+  public void reset() {
+    this.glyphRendererCache = new CodepointMap<>(BakedGlyph[]::new, BakedGlyph[][]::new);
+    this.glyphCache = new CodepointMap<>(GlyphPair[]::new, GlyphPair[][]::new);
+    this.charactersByWidth = new Int2ObjectOpenHashMap<>();
+    this.glyphAtlases = new ArrayList<>();
   }
 
   @Override

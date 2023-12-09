@@ -42,11 +42,11 @@ public class EmoteUtil {
     // I've found this is a pretty good scale factor for 24x24px Twitch emotes.
     public static final float CUSTOM_IMAGE_SCALE_FACTOR = 0.08f;
 
-    private final CustomImageFont customImageFont;
-    private final CustomImageFontStorage customImageFontStorage;
+    private CustomImageFont customImageFont;
+    private CustomImageFontStorage customImageFontStorage;
     private static final EmoteUtil instance = new EmoteUtil();
 
-    private final ConcurrentHashMap<String, Integer> idToCodepointHashMap;
+    private ConcurrentHashMap<String, Integer> idToCodepointHashMap;
 
     private int currentCodepoint;
 
@@ -57,6 +57,14 @@ public class EmoteUtil {
         /// The order is important here. Emote font storage depends on the emote font.
         this.customImageFont = new CustomImageFont();
         this.customImageFontStorage = new CustomImageFontStorage(this.getCustomImageFont());
+    }
+
+    public void reset() {
+        this.idToCodepointHashMap = new ConcurrentHashMap<>();
+        this.currentCodepoint = 1;
+
+        this.customImageFont.reset();
+        this.customImageFontStorage.reset();
     }
 
     public void loadCache(String server) {

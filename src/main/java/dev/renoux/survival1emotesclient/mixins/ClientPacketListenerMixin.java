@@ -109,6 +109,7 @@ public abstract class ClientPacketListenerMixin {
 
     @Inject(method = "handleLogin(Lnet/minecraft/network/protocol/game/ClientboundLoginPacket;)V", at = @At("HEAD"))
     private void joinServer(ClientboundLoginPacket clientboundLoginPacket, CallbackInfo ci) {
+        EmoteUtil.getInstance().reset();
         if (this.getServerData() != null)
             EmoteUtil.getInstance().loadCache(sanatizeIP(this.getServerData().ip));
     }
