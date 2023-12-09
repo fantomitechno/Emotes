@@ -59,7 +59,7 @@ public class CustomImageCache {
         this.cacheFolder.resolve(server).toFile().mkdirs();
         return Files.walk(this.cacheFolder.resolve(server))
                 .filter(p -> p.toFile().isFile() && p.toString().endsWith(".png"))
-                .map(p -> new CacheEntry(this.cacheFolder.relativize(p).toString().replace(".png", ""), p))
+                .map(p -> new CacheEntry(this.cacheFolder.resolve(server).relativize(p).toString().replace(".png", ""), p))
                 .toArray(CacheEntry[]::new);
     }
 

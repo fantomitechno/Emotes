@@ -3,6 +3,7 @@
   "package": "dev.renoux.survival1emotesclient.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "ChatScreenMixin",
     "ClientPacketListenerMixin",
     "FontManagerMixin"
   ],

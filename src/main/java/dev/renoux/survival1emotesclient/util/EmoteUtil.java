@@ -28,6 +28,9 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static dev.renoux.survival1emotesclient.Survival1EmotesClient.MODID;
@@ -127,5 +130,9 @@ public class EmoteUtil {
     }
     public Integer getCodepoint(String id) {
         return this.idToCodepointHashMap.getOrDefault(id, null);
+    }
+
+    public List<String> getEmotes() {
+        return this.idToCodepointHashMap.keySet().stream().toList();
     }
 }
