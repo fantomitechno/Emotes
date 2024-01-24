@@ -21,7 +21,7 @@
   "mixins": [
     "survival1emotesclient.mixins.json"
   ],
-
+  "accessWidener" : "survival1emotesclient.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.21",
     "minecraft": ">=1.20",
