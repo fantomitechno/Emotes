@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "dev.renoux.survival1emotesclient.mixins",
+  "package": "dev.renoux.kfc1emotes.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
     "ChatScreenMixin",

@@ -21,20 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.survival1emotesclient;
+package dev.renoux.kfc1emotes.networking;
 
-import net.fabricmc.api.ClientModInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.resources.ResourceLocation;
 
-public class Survival1EmotesClient implements ClientModInitializer {
-  public static final String MODID = "survival1emotes";
-  public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+import static dev.renoux.kfc1emotes.KEFC1Emotes.MODID;
 
-  @Override
-  public void onInitializeClient() {
-    LOGGER.info("Emotes : LOADING");
+public class EmotePacket implements Packet<ClientGamePacketListener> {
+    public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote");
 
-    LOGGER.info("Emotes : LOADED");
-  }
+    public final byte[] emoteFile;
+    public final String name;
+    public EmotePacket(FriendlyByteBuf buf) {
+        emoteFile = buf.readByteArray();
+        name = buf.readUtf();
+    }
+
+    public EmotePacket(String name) {
+        this.emoteFile = null;
+        this.name = name;
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
+        buf.writeUtf(name);
+    }
+
+    @Override
+    public void handle(ClientGamePacketListener listener) {
+    }
 }

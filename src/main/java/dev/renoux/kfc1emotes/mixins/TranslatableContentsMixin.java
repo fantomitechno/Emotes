@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.survival1emotesclient.mixins;
+package dev.renoux.kfc1emotes.mixins;
 
-import dev.renoux.survival1emotesclient.util.EmoteUtil;
+import dev.renoux.kfc1emotes.util.EmoteUtil;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;

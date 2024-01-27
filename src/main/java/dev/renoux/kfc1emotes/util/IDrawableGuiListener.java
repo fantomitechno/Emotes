@@ -7,10 +7,23 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package dev.renoux.survival1emotesclient.util;
+package dev.renoux.kfc1emotes.util;
 
-import com.mojang.blaze3d.font.SheetGlyphInfo;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 
-public interface CustomImageRenderableGlyph extends SheetGlyphInfo {
-  public String getId();
+public abstract class IDrawableGuiListener implements GuiEventListener {
+
+
+    abstract void render(GuiGraphics guiGraphics);
+
+    @Override
+    public void setFocused(boolean b) {
+
+    }
+
+    @Override
+    public boolean isFocused() {
+        return false;
+    }
 }

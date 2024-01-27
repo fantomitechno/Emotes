@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.survival1emotesclient.util;
+package dev.renoux.kfc1emotes.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static dev.renoux.survival1emotesclient.Survival1EmotesClient.MODID;
+import static dev.renoux.kfc1emotes.KEFC1Emotes.MODID;
 
 public class EmoteUtil {
 

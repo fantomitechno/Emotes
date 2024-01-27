@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.survival1emotesclient.networking;
+package dev.renoux.kfc1emotes.networking;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
@@ -31,7 +31,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.HashMap;
 import java.util.Map;
 
-import static dev.renoux.survival1emotesclient.Survival1EmotesClient.MODID;
+import static dev.renoux.kfc1emotes.KEFC1Emotes.MODID;
 
 public class ListEmotePacket  implements Packet<ClientGamePacketListener> {
     public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote_list");

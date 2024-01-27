@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "survival1emotesclient",
+  "id": "kfc1emotes",
   "version": "${version}",
 
   "name": "Emotes Mod Client",
@@ -10,18 +10,18 @@
   ],
 
   "license": "MIT",
-  "icon": "assets/survival1emotesclient/icon.png",
+  "icon": "assets/kfc1emotes/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "client": [
-      "dev.renoux.survival1emotesclient.Survival1EmotesClient"
+      "dev.renoux.kfc1emotes.KEFC1Emotes"
     ]
   },
   "mixins": [
-    "survival1emotesclient.mixins.json"
+    "kfc1emotes.mixins.json"
   ],
-  "accessWidener" : "survival1emotesclient.accesswidener",
+  "accessWidener" : "kfc1emotes.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.21",
     "minecraft": ">=1.20",
