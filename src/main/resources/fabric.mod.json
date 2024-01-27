@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "dev.renoux.kfc1emotes.KEFC1Emotes"
+      "dev.renoux.kfc1emotes.KFC1Emotes"
     ]
   },
   "mixins": [
