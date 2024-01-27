@@ -87,7 +87,7 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
             final int cursorPosition = this.chatScreen.input.getCursorPosition();
             final int lastWordIndex = getLastWordIndex(s);
             if (lastWordIndex < s.length() ? s.charAt(lastWordIndex) == ':' : !s.isEmpty() && s.charAt(0) == ':') {
-                if ((skip || cursorPosition - lastWordIndex >= 3) && (this.suggestions == null || !this.updating)) {
+                if ((skip || cursorPosition - lastWordIndex >= 1) && (this.suggestions == null || !this.updating)) {
                     final CompletableFuture<Iterable<String>> list = CompletableFuture.supplyAsync(() -> EmoteUtil.getInstance().getEmotes());
                     this.suggestionsFuture = list.thenApplyAsync(stringIterable -> createSuggestions(stringIterable, new SuggestionsBuilder(s, lastWordIndex)));
                     this.suggestionsFuture.thenRun(() -> {
