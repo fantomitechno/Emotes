@@ -29,7 +29,7 @@ dependencies {
 }
 
 loom {
-	accessWidenerPath = file "src/main/resources/survival1emotesclient.accesswidener"
+	accessWidenerPath = file "src/main/resources/kfc1emotes.accesswidener"
 }
 
 processResources {
