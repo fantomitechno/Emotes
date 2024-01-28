@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static dev.renoux.kfc1emotes.KEFC1Emotes.MODID;
+import static dev.renoux.kfc1emotes.KFC1Emotes.MODID;
 
 public class CustomImageCache {
     private static CustomImageCache instance;

@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static dev.renoux.kfc1emotes.KEFC1Emotes.MODID;
+import static dev.renoux.kfc1emotes.KFC1Emotes.MODID;
 
 public class EmoteUtil {
 

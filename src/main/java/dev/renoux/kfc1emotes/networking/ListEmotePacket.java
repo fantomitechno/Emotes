@@ -31,7 +31,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.HashMap;
 import java.util.Map;
 
-import static dev.renoux.kfc1emotes.KEFC1Emotes.MODID;
+import static dev.renoux.kfc1emotes.KFC1Emotes.MODID;
 
 public class ListEmotePacket  implements Packet<ClientGamePacketListener> {
     public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote_list");

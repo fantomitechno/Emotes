@@ -28,7 +28,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 
-import static dev.renoux.kfc1emotes.KEFC1Emotes.MODID;
+import static dev.renoux.kfc1emotes.KFC1Emotes.MODID;
 
 public class EmotePacket implements Packet<ClientGamePacketListener> {
     public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote");
