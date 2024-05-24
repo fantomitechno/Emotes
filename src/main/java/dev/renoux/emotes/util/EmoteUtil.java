@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.kfc1emotes.util;
+package dev.renoux.emotes.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static dev.renoux.kfc1emotes.KFC1Emotes.MODID;
+import static dev.renoux.emotes.Emotes.MODID;
 
 public class EmoteUtil {
 

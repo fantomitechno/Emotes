@@ -1,6 +1,6 @@
-# Survival1Emotes Client
+# Emotes Client
 
-A mod to use emotes on the KFC's servers
+A mod to use emotes
 
 ## Installation
 Install [fabric](https://fabricmc.net/use/) (or Quilt) for 1.20.1\
@@ -9,4 +9,4 @@ Finally, get the mod from the releases tab or from the actions tab (for unstable
 
 ## Licenses
 This project is under the [MIT License](./LICENSE) but some part are licensed with other licenses or are not licensed by myself:
-- MIT License but by Pablo Pérez Rodríguez [CustomImageCache](./src/main/java/dev/renoux/kfc1emotes/util/CustomImageCache.java), [CustomImageFont](./src/main/java/dev/renoux/kfc1emotes/util/CustomImageFont.java), [CustomImageFontStorage](./src/main/java/dev/renoux/kfc1emotes/util/CustomImageFontStorage.java), [CustomImageRenderableGlyph](./src/main/java/dev/renoux/kfc1emotes/util/CustomImageRenderableGlyph.java) and [FontManagerMixin](./src/main/java/dev/renoux/kfc1emotes/mixins/FontManagerMixin.java)
+- MIT License but by Pablo Pérez Rodríguez [CustomImageCache](./src/main/java/dev/renoux/emotes/util/CustomImageCache.java), [CustomImageFont](./src/main/java/dev/renoux/emotes/util/CustomImageFont.java), [CustomImageFontStorage](./src/main/java/dev/renoux/emotes/util/CustomImageFontStorage.java), [CustomImageRenderableGlyph](./src/main/java/dev/renoux/emotes/util/CustomImageRenderableGlyph.java) and [FontManagerMixin](./src/main/java/dev/renoux/emotes/mixins/FontManagerMixin.java)

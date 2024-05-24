@@ -21,36 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.kfc1emotes.networking;
+package dev.renoux.emotes;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
+import net.fabricmc.api.ClientModInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static dev.renoux.kfc1emotes.KFC1Emotes.MODID;
+public class Emotes implements ClientModInitializer {
+  public static final String MODID = "emotes";
+  public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-public class EmotePacket implements Packet<ClientGamePacketListener> {
-    public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote");
+  @Override
+  public void onInitializeClient() {
+    LOGGER.info("Emotes : LOADING");
 
-    public final byte[] emoteFile;
-    public final String name;
-    public EmotePacket(FriendlyByteBuf buf) {
-        emoteFile = buf.readByteArray();
-        name = buf.readUtf();
-    }
-
-    public EmotePacket(String name) {
-        this.emoteFile = null;
-        this.name = name;
-    }
-
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeUtf(name);
-    }
-
-    @Override
-    public void handle(ClientGamePacketListener listener) {
-    }
+    LOGGER.info("Emotes : LOADED");
+  }
 }

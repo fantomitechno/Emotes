@@ -21,20 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.kfc1emotes;
+package dev.renoux.emotes.networking;
 
-import net.fabricmc.api.ClientModInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.resources.ResourceLocation;
 
-public class KFC1Emotes implements ClientModInitializer {
-  public static final String MODID = "kfc1emotes";
-  public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+import java.util.HashMap;
+import java.util.Map;
 
-  @Override
-  public void onInitializeClient() {
-    LOGGER.info("Emotes : LOADING");
+import static dev.renoux.emotes.Emotes.MODID;
 
-    LOGGER.info("Emotes : LOADED");
-  }
+public class ListEmotePacket  implements Packet<ClientGamePacketListener> {
+    public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote_list");
+
+    public final Map<String, Integer> nameAndHash;
+    public ListEmotePacket(FriendlyByteBuf buf) {
+        this.nameAndHash = new HashMap<>();
+        String nameAndHashArray = buf.readUtf();
+        for (String nameHash: nameAndHashArray.split(",")) {
+            if (!nameHash.isEmpty()) {
+                String[] split = nameHash.split(":");
+                this.nameAndHash.put(split[0], Integer.valueOf(split[1]));
+            }
+        }
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
+    }
+
+    @Override
+    public void handle(ClientGamePacketListener listener) {
+    }
 }

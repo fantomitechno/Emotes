@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.kfc1emotes.util;
+package dev.renoux.emotes.util;
 
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static dev.renoux.kfc1emotes.KFC1Emotes.MODID;
+import static dev.renoux.emotes.Emotes.MODID;
 
 public class CustomImageCache {
     private static CustomImageCache instance;

@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "kfc1emotes",
+  "id": "emotes",
   "version": "${version}",
 
   "name": "Emotes Mod Client",
-  "description": "Mod to use Emotes on the KFC's servers",
+  "description": "Mod to use Emotes",
   "authors": [
     "fantomitechno (aka Simon R)"
   ],
 
   "license": "MIT",
-  "icon": "assets/kfc1emotes/icon.png",
+  "icon": "assets/emotes/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "client": [
-      "dev.renoux.kfc1emotes.KFC1Emotes"
+      "dev.renoux.emotes.Emotes"
     ]
   },
   "mixins": [
-    "kfc1emotes.mixins.json"
+    "emotes.mixins.json"
   ],
-  "accessWidener" : "kfc1emotes.accesswidener",
+  "accessWidener" : "emotes.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.21",
     "minecraft": ">=1.20",

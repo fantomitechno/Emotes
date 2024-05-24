@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.kfc1emotes.mixins;
+package dev.renoux.emotes.mixins;
 
 import com.mojang.blaze3d.platform.NativeImage;
-import dev.renoux.kfc1emotes.KFC1Emotes;
-import dev.renoux.kfc1emotes.networking.EmotePacket;
-import dev.renoux.kfc1emotes.networking.ListEmotePacket;
-import dev.renoux.kfc1emotes.util.CustomImageCache;
-import dev.renoux.kfc1emotes.util.EmoteUtil;
+import dev.renoux.emotes.Emotes;
+import dev.renoux.emotes.networking.EmotePacket;
+import dev.renoux.emotes.networking.ListEmotePacket;
+import dev.renoux.emotes.util.CustomImageCache;
+import dev.renoux.emotes.util.EmoteUtil;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -68,7 +68,7 @@ public abstract class ClientPacketListenerMixin {
         String ip = sanatizeIP(Minecraft.getInstance().getCurrentServer().ip);
         if (clientboundCustomPayloadPacket.getIdentifier().equals(EmotePacket.PACKET)) {
             EmotePacket packet = new EmotePacket(clientboundCustomPayloadPacket.getData());
-            KFC1Emotes.LOGGER.info("Got emote " + packet.name);
+            Emotes.LOGGER.info("Got emote " + packet.name);
             EmoteUtil.getInstance().addEmote(ip, packet.name, NativeImage.read(packet.emoteFile), true);
             ci.cancel();
         } else if (clientboundCustomPayloadPacket.getIdentifier().equals(ListEmotePacket.PACKET)) {
@@ -92,11 +92,11 @@ public abstract class ClientPacketListenerMixin {
 
             for (CustomImageCache.CacheEntry cacheEntry : cached) {
                 new File(cacheEntry.path().toString()).delete();
-                KFC1Emotes.LOGGER.info("Removing " + cacheEntry.id());
+                Emotes.LOGGER.info("Removing " + cacheEntry.id());
             }
 
             for (String unknowEmote : unknowEmotes) {
-                KFC1Emotes.LOGGER.info("Asking for " + unknowEmote);
+                Emotes.LOGGER.info("Asking for " + unknowEmote);
                 FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
                 new EmotePacket(unknowEmote).write(buf);
                 this.send(new ServerboundCustomPayloadPacket(EmotePacket.PACKET, buf));

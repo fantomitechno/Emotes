@@ -29,7 +29,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.kfc1emotes.util;
+package dev.renoux.emotes.util;
 
 import com.google.common.base.Strings;
 import com.mojang.brigadier.StringReader;
