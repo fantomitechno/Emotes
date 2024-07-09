@@ -86,8 +86,8 @@ public class CustomImageFont implements GlyphProvider {
         }
 
         @Override
-        public float getBearingY() {
-          return CustomImageRenderableGlyph.super.getBearingY() + 7.0f - ascent;
+        public float getBearingTop() {
+          return CustomImageRenderableGlyph.super.getBearingTop() + 7.0f - ascent;
         }
 
         @Override

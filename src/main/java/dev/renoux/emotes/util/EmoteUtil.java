@@ -35,7 +35,7 @@ import static dev.renoux.emotes.Emotes.MODID;
 
 public class EmoteUtil {
 
-    public static final ResourceLocation CUSTOM_IMAGE_FONT_IDENTIFIER = new ResourceLocation(MODID, "emote_font");
+    public static final ResourceLocation CUSTOM_IMAGE_FONT_IDENTIFIER = ResourceLocation.fromNamespaceAndPath(MODID, "emote_font");
 
     // I've found this is a pretty good scale factor for 24x24px Twitch emotes.
     public static final float CUSTOM_IMAGE_SCALE_FACTOR = 0.08f;

@@ -16,10 +16,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.font.CodepointMap;
-import net.minecraft.client.gui.font.FontSet;
-import net.minecraft.client.gui.font.FontTexture;
-import net.minecraft.client.gui.font.GlyphRenderTypes;
+import net.minecraft.client.gui.font.*;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.font.glyphs.SpecialGlyphs;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CustomImageFontStorage extends FontSet implements AutoCloseable {
   private static final RandomSource RANDOM = RandomSource.create();
@@ -54,7 +52,7 @@ public class CustomImageFontStorage extends FontSet implements AutoCloseable {
   }
 
   @Override
-  public void reload(List<GlyphProvider> fonts) { }
+  public void reload(List<GlyphProvider.Conditional> fonts, Set<FontOption> activeFilters) { }
 
   @Override
   public void close() {

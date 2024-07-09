@@ -24,17 +24,17 @@
 package dev.renoux.emotes.networking;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 import static dev.renoux.emotes.Emotes.MODID;
 
-public class EmotePacket implements Packet<ClientGamePacketListener> {
-    public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote");
+public class EmotePacket implements Packet<EmotePacket> {
+    public static final Type<EmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "emotes"));
 
     public final byte[] emoteFile;
     public final String name;
+
     public EmotePacket(FriendlyByteBuf buf) {
         emoteFile = buf.readByteArray();
         name = buf.readUtf();
@@ -46,11 +46,17 @@ public class EmotePacket implements Packet<ClientGamePacketListener> {
     }
 
     @Override
-    public void write(FriendlyByteBuf buf) {
+    public EmotePacket fromBytes(FriendlyByteBuf buf) {
+        return new EmotePacket(buf);
+    }
+
+    @Override
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeUtf(name);
     }
 
     @Override
-    public void handle(ClientGamePacketListener listener) {
+    public CustomPacketPayload.Type<EmotePacket> type() {
+        return PACKET;
     }
 }

@@ -14,7 +14,7 @@
 
   "environment": "*",
   "entrypoints": {
-    "client": [
+    "main": [
       "dev.renoux.emotes.Emotes"
     ]
   },
@@ -24,7 +24,8 @@
   "accessWidener" : "emotes.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.21",
-    "minecraft": ">=1.20",
-    "java": ">=17"
+    "fabric": ">=0.100.6",
+    "minecraft": ">=1.21",
+    "java": ">=21"
   }
 }

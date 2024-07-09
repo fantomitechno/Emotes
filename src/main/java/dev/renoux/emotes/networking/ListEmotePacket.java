@@ -24,7 +24,6 @@
 package dev.renoux.emotes.networking;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 
@@ -33,8 +32,8 @@ import java.util.Map;
 
 import static dev.renoux.emotes.Emotes.MODID;
 
-public class ListEmotePacket  implements Packet<ClientGamePacketListener> {
-    public static final ResourceLocation PACKET = new ResourceLocation(MODID, "emote_list");
+public class ListEmotePacket  implements Packet<ListEmotePacket> {
+    public static final Type<ListEmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "emote_list"));
 
     public final Map<String, Integer> nameAndHash;
     public ListEmotePacket(FriendlyByteBuf buf) {
@@ -49,10 +48,16 @@ public class ListEmotePacket  implements Packet<ClientGamePacketListener> {
     }
 
     @Override
-    public void write(FriendlyByteBuf buf) {
+    public ListEmotePacket fromBytes(FriendlyByteBuf buf) {
+        return new ListEmotePacket(buf);
     }
 
     @Override
-    public void handle(ClientGamePacketListener listener) {
+    public void toBytes(FriendlyByteBuf buf) {
+    }
+
+    @Override
+    public Type<ListEmotePacket> type() {
+        return PACKET;
     }
 }
