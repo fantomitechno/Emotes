@@ -21,45 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.emotes.networking;
+package dev.renoux.emotes;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.fabricmc.api.ClientModInitializer;
 
-import static dev.renoux.emotes.Emotes.MODID;
+import static dev.renoux.emotes.Emotes.LOGGER;
 
-public class EmotePacket implements Packet<EmotePacket> {
-    public static final Type<EmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "emotes"));
+public class EmotesClient implements ClientModInitializer {
 
-    public byte[] emoteFile;
-    public String name;
+  @Override
+  public void onInitializeClient() {
+    LOGGER.info("EmotesClient : LOADING");
 
-    @SuppressWarnings("unused")
-    public EmotePacket() {
-    }
+    Events.init(true);
 
-    public EmotePacket(byte[] emoteFile, String name) {
-        this.emoteFile = emoteFile;
-        this.name = name;
-    }
-
-    @Override
-    public EmotePacket fromBytes(FriendlyByteBuf buf) {
-        emoteFile = buf.readByteArray();
-        name = buf.readUtf();
-
-        return this;
-    }
-
-    @Override
-    public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(name);
-        buf.writeByteArray(this.emoteFile);
-    }
-
-    @Override
-    public CustomPacketPayload.Type<EmotePacket> type() {
-        return PACKET;
-    }
+    LOGGER.info("EmotesClient : LOADED");
+  }
 }

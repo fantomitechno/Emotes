@@ -3,8 +3,8 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -13,6 +13,7 @@ group = project.maven_group
 repositories {
 	maven { url = 'https://maven.terraformersmc.com/'}
 	maven { url = "https://libraries.minecraft.net" }
+	maven { url = "https://maven.quiltmc.org/repository/release/" }
 	mavenCentral()
 }
 
@@ -29,10 +30,28 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// the main quilt config API. replace <version> with the latest version
+	implementation("org.quiltmc:quilt-config:${project.quilt_config}")
+
+	// optional: a serializer to use when saving and reading the config
+	// you can omit this and implement your own serializer
+	// replace <serializer> with either "json5" or "toml" and <version> with the latest version
+	implementation("org.quiltmc.quilt-config.serializers:toml:${project.quilt_config}")
 }
 
 loom {
 	accessWidenerPath = file "src/main/resources/emotes.accesswidener"
+
+	runs {
+		server {
+			runDir = "run/server"
+		}
+
+		client {
+			runDir = "run"
+		}
+	}
 }
 
 processResources {
@@ -44,7 +63,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+	it.options.release = 21
 }
 
 java {

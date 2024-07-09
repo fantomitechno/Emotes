@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static dev.renoux.emotes.Emotes.LOGGER;
 import static dev.renoux.emotes.Emotes.MODID;
 
 public class EmoteUtil {
@@ -94,7 +95,7 @@ public class EmoteUtil {
     }
 
     public void addEmote(String server, String emoteName, NativeImage image, boolean writeToDisk) throws Exception {
-
+        LOGGER.info("Registring emote " + emoteName);
         if (writeToDisk) {
             if (emoteName.equals("nul")) {
                 image.writeToFile(CustomImageCache.getInstance().getPngFile(server, "nul_"));

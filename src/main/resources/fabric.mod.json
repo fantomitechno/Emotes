@@ -14,7 +14,10 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "client": [
+      "dev.renoux.emotes.EmotesClient"
+    ],
+    "server": [
       "dev.renoux.emotes.Emotes"
     ]
   },
