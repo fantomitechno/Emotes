@@ -10,7 +10,6 @@ import dev.renoux.emotes.util.CustomImageCache;
 import dev.renoux.emotes.util.EmoteUtil;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -35,10 +34,10 @@ public class Events {
     private static String nameAndHashArray;
     private static HashMap<String, byte[]> emotesFiles;
 
-    private static Boolean registredPayload = false;
+    private static Boolean registeredPayload = false;
 
     public static void init(Boolean client) {
-        if (!registredPayload) loadPayloadRegistry();
+        if (!registeredPayload) loadPayloadRegistry();
         if (client) {
             initClientCustomPlayload();
         } else {
@@ -74,7 +73,7 @@ public class Events {
         PayloadTypeRegistry.playS2C().register(ListEmotePacket.PACKET, createCode(ListEmotePacket.class));
         PayloadTypeRegistry.playS2C().register(EmotePacket.PACKET, createCode(EmotePacket.class));
         PayloadTypeRegistry.playC2S().register(AskEmotePacket.PACKET, createCode(AskEmotePacket.class));
-        registredPayload = true;
+        registeredPayload = true;
     }
 
     private static void initPlayerJoin() {
@@ -85,6 +84,7 @@ public class Events {
 
     private static void initCustomPayload() {
         ServerPlayNetworking.registerGlobalReceiver(AskEmotePacket.PACKET, (payload, context) -> {
+            LOGGER.info(emotesFiles.get(payload.name).toString());
             context.responseSender().sendPacket(new EmotePacket(emotesFiles.get(payload.name), payload.name));
         });
     }
@@ -92,6 +92,7 @@ public class Events {
     private static void initClientCustomPlayload() {
         ClientPlayNetworking.registerGlobalReceiver(EmotePacket.PACKET, (payload, context) -> {
             String ip = sanitizeIP(Minecraft.getInstance().getCurrentServer().ip);
+            LOGGER.info(payload.emoteFile.toString());
             try {
                 EmoteUtil.getInstance().addEmote(ip, payload.name, NativeImage.read(new ByteArrayInputStream(payload.emoteFile)), true);
             } catch (Exception e) {

@@ -46,8 +46,8 @@ public class EmotePacket implements Packet<EmotePacket> {
 
     @Override
     public EmotePacket fromBytes(FriendlyByteBuf buf) {
-        emoteFile = buf.readByteArray();
         name = buf.readUtf();
+        emoteFile = buf.readByteArray();
 
         return this;
     }
@@ -55,7 +55,7 @@ public class EmotePacket implements Packet<EmotePacket> {
     @Override
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeUtf(name);
-        buf.writeByteArray(this.emoteFile);
+        buf.writeByteArray(emoteFile);
     }
 
     @Override
