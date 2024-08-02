@@ -38,6 +38,10 @@ dependencies {
 	// you can omit this and implement your own serializer
 	// replace <serializer> with either "json5" or "toml" and <version> with the latest version
 	include(implementation("org.quiltmc.quilt-config.serializers:toml:${project.quilt_config}"))
+
+
+	include "com.electronwill.night-config:core:${project.night_config}"
+	include "com.electronwill.night-config:toml:${project.night_config}"
 }
 
 loom {
