@@ -15,4 +15,6 @@ public class ModConfig extends ReflectiveConfig {
     public static final ModConfig INSTANCE = ConfigFactory.create(new ConfigEnvironment(FabricLoader.getInstance().getConfigDir(), TomlSerializer.INSTANCE), MODID, MODID, Paths.get(""), builder -> {}, ModConfig.class, builder -> {});
 
     public final TrackedValue<ValueList<String>> emotes = this.list("", "kappa:KappaTest", "kappa:KappaTest");
+    public final TrackedValue<Boolean> show_suggestion = this.value(false);
+    
 }

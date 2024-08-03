@@ -36,6 +36,7 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import dev.renoux.emotes.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
@@ -145,7 +146,7 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
 
     @Override
     public void render(GuiGraphics matrixStack) {
-        if (this.suggestions != null) {
+        if (this.suggestions != null && ModConfig.INSTANCE.show_suggestion.getRealValue()) {
             this.suggestions.render(matrixStack);
         }
         checkTextUpdate();
