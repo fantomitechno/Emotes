@@ -49,6 +49,16 @@ public class EmoteUtil {
 
     private int currentCodepoint;
 
+    private boolean showSuggestions;
+
+    public void setShowSuggestions(boolean value) {
+        showSuggestions = value;
+    }
+
+    public boolean showSuggestions() {
+        return showSuggestions;
+    }
+
     private EmoteUtil() {
         this.idToCodepointHashMap = new ConcurrentHashMap<>();
         this.currentCodepoint = 1;

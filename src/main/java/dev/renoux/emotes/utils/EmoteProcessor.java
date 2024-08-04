@@ -23,7 +23,7 @@
  */
 package dev.renoux.emotes.utils;
 
-import dev.renoux.emotes.config.ModConfig;
+import dev.renoux.emotes.Emotes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -32,15 +32,13 @@ import org.quiltmc.config.api.values.ValueList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static dev.renoux.emotes.Emotes.LOGGER;
-
 public class EmoteProcessor {
 
     private static Map<String, String> EMOTES = new HashMap<>();
 
     public static void init() {
         EMOTES = new HashMap<>();
-        ValueList<String> emotes = ModConfig.INSTANCE.emotes.getRealValue();
+        ValueList<String> emotes = Emotes.serverConfig.emotes.getRealValue();
         for (String emote : emotes) {
             String[] splitedEmote = emote.split(":");
             EMOTES.put(splitedEmote[0], splitedEmote[1]);

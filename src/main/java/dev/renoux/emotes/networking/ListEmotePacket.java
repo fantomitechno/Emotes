@@ -23,6 +23,8 @@
  */
 package dev.renoux.emotes.networking;
 
+import dev.renoux.emotes.Emotes;
+import dev.renoux.emotes.util.EmoteUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
@@ -56,6 +58,7 @@ public class ListEmotePacket  implements Packet<ListEmotePacket> {
                 this.nameAndHash.put(split[0], Integer.valueOf(split[1]));
             }
         }
+        EmoteUtil.getInstance().setShowSuggestions(buf.readBoolean());
 
         return this;
     }
@@ -63,6 +66,7 @@ public class ListEmotePacket  implements Packet<ListEmotePacket> {
     @Override
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeUtf(nameAndHashArray);
+        buf.writeBoolean(Emotes.serverConfig.showSuggestions.getRealValue());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package dev.renoux.emotes;
 
 import com.mojang.blaze3d.platform.NativeImage;
-import dev.renoux.emotes.config.ModConfig;
 import dev.renoux.emotes.networking.AskEmotePacket;
 import dev.renoux.emotes.networking.EmotePacket;
 import dev.renoux.emotes.networking.ListEmotePacket;
@@ -44,7 +43,7 @@ public class Events {
             initPlayerJoin();
             initCustomPayload();
 
-            ValueList<String> emotes = ModConfig.INSTANCE.emotes.getRealValue();
+            ValueList<String> emotes = Emotes.serverConfig.emotes.getRealValue();
             emotesFiles = new HashMap<>();
             StringBuilder nameAndHash = new StringBuilder();
             for (String emote : emotes) {
@@ -84,7 +83,6 @@ public class Events {
 
     private static void initCustomPayload() {
         ServerPlayNetworking.registerGlobalReceiver(AskEmotePacket.PACKET, (payload, context) -> {
-            LOGGER.info(emotesFiles.get(payload.name).toString());
             context.responseSender().sendPacket(new EmotePacket(emotesFiles.get(payload.name), payload.name));
         });
     }
@@ -92,7 +90,6 @@ public class Events {
     private static void initClientCustomPlayload() {
         ClientPlayNetworking.registerGlobalReceiver(EmotePacket.PACKET, (payload, context) -> {
             String ip = sanitizeIP(Minecraft.getInstance().getCurrentServer().ip);
-            LOGGER.info(payload.emoteFile.toString());
             try {
                 EmoteUtil.getInstance().addEmote(ip, payload.name, NativeImage.read(new ByteArrayInputStream(payload.emoteFile)), true);
             } catch (Exception e) {

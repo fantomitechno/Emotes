@@ -23,7 +23,7 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	
-  	modImplementation "com.ptsmods:devlogin:3.1.1" // Developpement deps : let me use my account
+  	modImplementation "com.ptsmods:devlogin:3.5" // Developpement deps : let me use my account
 
 	// not required, but we want to see our config screen
 	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"

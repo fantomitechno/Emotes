@@ -10,6 +10,7 @@
 package dev.renoux.emotes.mixins;
 
 import dev.renoux.emotes.util.EmojiSuggestionHelper;
+import dev.renoux.emotes.util.EmoteUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,7 +33,7 @@ public class ChatScreenMixin {
 
     @Inject(method = "render", at = @At("HEAD"))
     public void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
-        if (emojiSuggestionHelper != null) emojiSuggestionHelper.render(guiGraphics);
+        if (emojiSuggestionHelper != null && EmoteUtil.getInstance().showSuggestions()) emojiSuggestionHelper.render(guiGraphics);
     }
 
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
