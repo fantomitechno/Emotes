@@ -8,6 +8,8 @@ import dev.renoux.emotes.networking.Packet;
 import dev.renoux.emotes.util.CustomImageCache;
 import dev.renoux.emotes.util.EmoteUtil;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -135,6 +137,13 @@ public class Events {
         });
     }
 
+    private static void initClientLogin() {
+        ClientLoginConnectionEvents.INIT.register((handler, client) -> {
+            EmoteUtil.getInstance().reset();
+            if (client.getCurrentServer() != null)
+                EmoteUtil.getInstance().loadCache(sanitizeIP(client.getCurrentServer().ip));
+        });
+    }
 
     private static <T extends Packet<T>> StreamCodec<RegistryFriendlyByteBuf, T> createCode(Class<T> packetType) {
         return new StreamCodec<>() {

@@ -71,6 +71,7 @@ public class EmoteUtil {
     public void reset() {
         this.idToCodepointHashMap = new ConcurrentHashMap<>();
         this.currentCodepoint = 1;
+        this.showSuggestions = false;
 
         this.customImageFont.reset();
         this.customImageFontStorage.reset();
