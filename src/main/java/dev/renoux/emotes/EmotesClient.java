@@ -25,6 +25,8 @@ package dev.renoux.emotes;
 
 import net.fabricmc.api.ClientModInitializer;
 
+import java.io.IOException;
+
 import static dev.renoux.emotes.Emotes.LOGGER;
 
 public class EmotesClient implements ClientModInitializer {
@@ -33,8 +35,10 @@ public class EmotesClient implements ClientModInitializer {
   public void onInitializeClient() {
     LOGGER.info("EmotesClient : LOADING");
 
-    Events.init(true);
+      try {
+          Events.init(true);
+      } catch (IOException ignored) {}
 
-    LOGGER.info("EmotesClient : LOADED");
+      LOGGER.info("EmotesClient : LOADED");
   }
 }

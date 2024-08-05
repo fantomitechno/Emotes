@@ -10,6 +10,7 @@ import org.quiltmc.config.implementor_api.ConfigFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 
 public class Emotes implements DedicatedServerModInitializer {
@@ -22,7 +23,11 @@ public class Emotes implements DedicatedServerModInitializer {
     public void onInitializeServer() {
         LOGGER.info("Emotes : LOADING");
 
-        Events.init(false);
+        try {
+            Events.init(false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         EmoteProcessor.init();
 

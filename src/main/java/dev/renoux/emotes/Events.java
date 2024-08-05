@@ -37,7 +37,7 @@ public class Events {
 
     private static Boolean registeredPayload = false;
 
-    public static void init(Boolean client) {
+    public static void init(Boolean client) throws IOException {
         if (!registeredPayload) loadPayloadRegistry();
         if (client) {
             initClientCustomPlayload();
@@ -64,6 +64,8 @@ public class Events {
                     } catch (Exception exception) {
                         LOGGER.info("An error occured while loading " + emote + " emote: " + exception.getMessage());
                     }
+                } else {
+                    throw new IOException("An image for the emote \"" + splitEmote[0] + "\" is missing");
                 }
             }
             nameAndHashArray = nameAndHash.toString();
