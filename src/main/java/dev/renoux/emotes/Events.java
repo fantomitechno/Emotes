@@ -63,6 +63,7 @@ public class Events {
                         nameAndHash.append(splitEmote[0]).append(":").append(file.hashCode()).append(",");
                     } catch (Exception exception) {
                         LOGGER.info("An error occurred while loading " + emote + " emote: " + exception.getMessage());
+                        throw new IOException("An error occurred while loading \"" + emote + "\" emote: " + exception.getMessage());
                     }
                 } else {
                     throw new IOException("An image for the emote \"" + splitEmote[0] + "\" is missing");
