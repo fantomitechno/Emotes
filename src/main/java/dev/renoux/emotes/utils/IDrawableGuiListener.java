@@ -9,18 +9,11 @@
  */
 package dev.renoux.emotes.utils;
 
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 
 public abstract class IDrawableGuiListener implements GuiEventListener {
-
-
-    abstract void render(GuiGraphics guiGraphics);
-
     @Override
-    public void setFocused(boolean b) {
-
-    }
+    public void setFocused(boolean b) {}
 
     @Override
     public boolean isFocused() {

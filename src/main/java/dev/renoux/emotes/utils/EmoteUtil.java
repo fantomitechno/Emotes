@@ -41,8 +41,8 @@ public class EmoteUtil {
     // I've found this is a pretty good scale factor for 24x24px Twitch emotes.
     public static final float CUSTOM_IMAGE_SCALE_FACTOR = 0.08f;
 
-    private CustomImageFont customImageFont;
-    private CustomImageFontStorage customImageFontStorage;
+    private final CustomImageFont customImageFont;
+    private final CustomImageFontStorage customImageFontStorage;
     private static final EmoteUtil instance = new EmoteUtil();
 
     private ConcurrentHashMap<String, Integer> idToCodepointHashMap;

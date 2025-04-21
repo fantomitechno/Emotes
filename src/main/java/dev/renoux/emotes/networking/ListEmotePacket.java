@@ -27,6 +27,7 @@ import dev.renoux.emotes.Emotes;
 import dev.renoux.emotes.utils.EmoteUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +70,7 @@ public class ListEmotePacket  implements Packet<ListEmotePacket> {
     }
 
     @Override
-    public Type<ListEmotePacket> type() {
+    public @NotNull Type<ListEmotePacket> type() {
         return PACKET;
     }
 }

@@ -8,9 +8,7 @@ import dev.renoux.emotes.networking.Packet;
 import dev.renoux.emotes.utils.CustomImageCache;
 import dev.renoux.emotes.utils.EmoteUtil;
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationConnectionEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -20,6 +18,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
+import org.jetbrains.annotations.NotNull;
 import org.quiltmc.config.api.values.ValueList;
 
 import java.io.*;
@@ -83,20 +82,16 @@ public class Events {
     }
 
     private static void initPlayerJoin() {
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            sender.sendPacket(new ListEmotePacket(nameAndHashArray));
-        });
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> sender.sendPacket(new ListEmotePacket(nameAndHashArray)));
     }
 
     private static void initCustomPayload() {
-        ServerPlayNetworking.registerGlobalReceiver(AskEmotePacket.PACKET, (payload, context) -> {
-            context.responseSender().sendPacket(new EmotePacket(emotesFiles.get(payload.name), payload.name));
-        });
+        ServerPlayNetworking.registerGlobalReceiver(AskEmotePacket.PACKET, (payload, context) -> context.responseSender().sendPacket(new EmotePacket(emotesFiles.get(payload.name), payload.name)));
     }
 
     private static void initClientCustomPlayload() {
         ClientPlayNetworking.registerGlobalReceiver(EmotePacket.PACKET, (payload, context) -> {
-            String ip = sanitizeIP(Minecraft.getInstance().getCurrentServer().ip);
+            String ip = sanitizeIP(Objects.requireNonNull(Minecraft.getInstance().getCurrentServer()).ip);
             try {
                 EmoteUtil.getInstance().addEmote(ip, payload.name, NativeImage.read(new ByteArrayInputStream(payload.emoteFile)), true);
             } catch (Exception e) {
@@ -105,7 +100,7 @@ public class Events {
         });
 
         ClientPlayNetworking.registerGlobalReceiver(ListEmotePacket.PACKET, (payload, context) -> {
-            String ip = sanitizeIP(Minecraft.getInstance().getCurrentServer().ip);
+            String ip = sanitizeIP(Objects.requireNonNull(Minecraft.getInstance().getCurrentServer()).ip);
 
             try {
                 List<CustomImageCache.CacheEntry> cached = new ArrayList<>(List.of(CustomImageCache.getInstance().getAllCachedFiles(ip)));
@@ -131,8 +126,6 @@ public class Events {
 
                 for (String unknowEmote : unknownEmotes) {
                     LOGGER.info("{} : Asking for {}", metadata.getName(), unknowEmote);
-                    FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-
                     context.responseSender().sendPacket(new ServerboundCustomPayloadPacket(new AskEmotePacket(unknowEmote)));
                 }
 
@@ -145,9 +138,7 @@ public class Events {
     }
 
     private static void initClientLogin() {
-        ClientConfigurationConnectionEvents.COMPLETE.register((handler, client) -> {
-            EmoteUtil.getInstance().reset();
-        });
+        ClientConfigurationConnectionEvents.COMPLETE.register((handler, client) -> EmoteUtil.getInstance().reset());
     }
 
     private static <T extends Packet<T>> StreamCodec<RegistryFriendlyByteBuf, T> createCode(Class<T> packetType) {
@@ -159,7 +150,7 @@ public class Events {
             }
 
             @Override
-            public T decode(RegistryFriendlyByteBuf buf) {
+            public @NotNull T decode(RegistryFriendlyByteBuf buf) {
                 try {
                     T packet = packetType.getDeclaredConstructor().newInstance();
                     packet.fromBytes(buf);
@@ -169,7 +160,7 @@ public class Events {
                 }
             }
         };
-    };
+    }
 
     private static String sanitizeIP(String ip) {
         return ip.replaceAll("\\.", "_").replaceAll(":", "_");

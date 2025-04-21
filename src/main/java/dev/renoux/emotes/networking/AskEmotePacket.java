@@ -3,6 +3,7 @@ package dev.renoux.emotes.networking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import static dev.renoux.emotes.Emotes.metadata;
 
@@ -31,7 +32,7 @@ public class AskEmotePacket implements Packet<AskEmotePacket> {
     }
 
     @Override
-    public CustomPacketPayload.Type<AskEmotePacket> type() {
+    public CustomPacketPayload.@NotNull Type<AskEmotePacket> type() {
         return PACKET;
     }
 }

@@ -95,7 +95,7 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.suggestions != null && this.suggestions.onKeyPressed(keyCode, scanCode, modifiers)) {
+        if (this.suggestions != null && this.suggestions.onKeyPressed(keyCode)) {
             return true;
         } else if (keyCode == 258) {
             this.updateSuggestionList(false);
@@ -143,7 +143,6 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
         }
     }
 
-    @Override
     public void render(GuiGraphics matrixStack) {
         if (this.suggestions != null) {
             this.suggestions.render(matrixStack);
@@ -193,7 +192,7 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
             EmojiSuggestionHelper.this.chatScreen.input.setSuggestion(trim(EmojiSuggestionHelper.this.chatScreen.input.getValue(), suggestions.getList().get(this.index).apply(currentText)));
         }
 
-        public boolean onKeyPressed(int keyCode, int scanCode, int modifiers) {
+        public boolean onKeyPressed(int keyCode) {
             if (keyCode == 265) {
                 offsetIndex(-1);
                 return true;

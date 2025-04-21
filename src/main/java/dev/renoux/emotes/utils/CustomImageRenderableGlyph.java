@@ -12,5 +12,5 @@ package dev.renoux.emotes.utils;
 import com.mojang.blaze3d.font.SheetGlyphInfo;
 
 public interface CustomImageRenderableGlyph extends SheetGlyphInfo {
-  public String getId();
+  String getId();
 }

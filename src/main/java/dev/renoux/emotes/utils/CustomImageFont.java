@@ -19,7 +19,6 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.ints.IntSets;
 import net.minecraft.client.gui.font.CodepointMap;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
-import net.minecraft.client.gui.font.providers.BitmapProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,7 +59,7 @@ public class CustomImageFont implements GlyphProvider {
   }
 
   @Override
-  public synchronized IntSet getSupportedGlyphs() {
+  public synchronized @NotNull IntSet getSupportedGlyphs() {
     return IntSets.unmodifiable(this.glyphs.keySet());
   }
 

@@ -26,6 +26,7 @@ package dev.renoux.emotes.networking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import static dev.renoux.emotes.Emotes.metadata;
 
@@ -59,7 +60,7 @@ public class EmotePacket implements Packet<EmotePacket> {
     }
 
     @Override
-    public CustomPacketPayload.Type<EmotePacket> type() {
+    public CustomPacketPayload.@NotNull Type<EmotePacket> type() {
         return PACKET;
     }
 }
