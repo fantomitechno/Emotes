@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
+	id 'fabric-loom' version '1.10-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -14,34 +14,36 @@ repositories {
 	maven { url = 'https://maven.terraformersmc.com/'}
 	maven { url = "https://libraries.minecraft.net" }
 	maven { url = "https://maven.quiltmc.org/repository/release/" }
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
 	mavenCentral()
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	
-  	modImplementation "com.ptsmods:devlogin:3.5" // Developpement deps : let me use my account
+	minecraft libs.minecraft
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${libs.versions.minecraft.get()}:${libs.versions.parchment.mappings.get()}@zip")
+	}
 
-	// not required, but we want to see our config screen
-	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
+	modImplementation libs.fabric.loader
+	modImplementation libs.fabric.api
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation libs.devlogin
 
-	// the main quilt config API. replace <version> with the latest version
-	include(implementation("org.quiltmc:quilt-config:${project.quilt_config}"))
+	modImplementation libs.mod.menu
 
-	// optional: a serializer to use when saving and reading the config
-	// you can omit this and implement your own serializer
-	// replace <serializer> with either "json5" or "toml" and <version> with the latest version
-	include(implementation("org.quiltmc.quilt-config.serializers:toml:${project.quilt_config}"))
+	implementation libs.quilt.config
+	implementation libs.quilt.config.toml
+	include libs.quilt.config
+	include libs.quilt.config.toml
 
 
-	include "com.electronwill.night-config:core:${project.night_config}"
-	include "com.electronwill.night-config:toml:${project.night_config}"
+	include libs.night.config
+	include libs.night.config.toml
 }
 
 loom {

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.emotes.util;
+package dev.renoux.emotes.utils;
 
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -30,7 +30,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static dev.renoux.emotes.Emotes.MODID;
+import static dev.renoux.emotes.Emotes.metadata;
+
 
 public class CustomImageCache {
     private static CustomImageCache instance;
@@ -41,7 +42,7 @@ public class CustomImageCache {
         this.cacheFolder = FabricLoader
                 .getInstance()
                 .getConfigDir()
-                .resolve(MODID)
+                .resolve(metadata.getId())
                 .resolve("cache");
         this.cacheFolder.toFile().mkdirs();
     }

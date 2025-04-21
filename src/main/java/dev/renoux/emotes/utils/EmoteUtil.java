@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.renoux.emotes.util;
+package dev.renoux.emotes.utils;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.resources.ResourceLocation;
@@ -32,11 +32,11 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static dev.renoux.emotes.Emotes.LOGGER;
-import static dev.renoux.emotes.Emotes.MODID;
+import static dev.renoux.emotes.Emotes.metadata;
 
 public class EmoteUtil {
 
-    public static final ResourceLocation CUSTOM_IMAGE_FONT_IDENTIFIER = ResourceLocation.fromNamespaceAndPath(MODID, "emote_font");
+    public static final ResourceLocation CUSTOM_IMAGE_FONT_IDENTIFIER = ResourceLocation.fromNamespaceAndPath(metadata.getId(), "emote_font");
 
     // I've found this is a pretty good scale factor for 24x24px Twitch emotes.
     public static final float CUSTOM_IMAGE_SCALE_FACTOR = 0.08f;
@@ -75,6 +75,7 @@ public class EmoteUtil {
 
         this.customImageFont.reset();
         this.customImageFontStorage.reset();
+        LOGGER.info("{} : Reset Emote Cache", metadata.getName());
     }
 
     public void loadCache(String server) {
@@ -89,6 +90,7 @@ public class EmoteUtil {
                 InputStream is = new FileInputStream(entry.path().toFile());
                 addImage(server, is, id, false);
             }
+            LOGGER.info("{} : Loaded {} cached emotes", metadata.getName(), allCachedFiles.length);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -106,7 +108,7 @@ public class EmoteUtil {
     }
 
     public void addEmote(String server, String emoteName, NativeImage image, boolean writeToDisk) throws Exception {
-        LOGGER.info("Registring emote " + emoteName);
+        LOGGER.info("{} : Registering emote {}", metadata.getName(), emoteName);
         if (writeToDisk) {
             if (emoteName.equals("nul")) {
                 image.writeToFile(CustomImageCache.getInstance().getPngFile(server, "nul_"));

@@ -9,8 +9,8 @@
  */
 package dev.renoux.emotes.mixins;
 
-import dev.renoux.emotes.util.EmojiSuggestionHelper;
-import dev.renoux.emotes.util.EmoteUtil;
+import dev.renoux.emotes.utils.EmojiSuggestionHelper;
+import dev.renoux.emotes.utils.EmoteUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;

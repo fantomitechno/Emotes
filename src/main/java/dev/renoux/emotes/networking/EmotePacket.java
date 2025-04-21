@@ -27,10 +27,10 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-import static dev.renoux.emotes.Emotes.MODID;
+import static dev.renoux.emotes.Emotes.metadata;
 
 public class EmotePacket implements Packet<EmotePacket> {
-    public static final Type<EmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "emotes"));
+    public static final Type<EmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(metadata.getId(), "emotes"));
 
     public byte[] emoteFile;
     public String name;

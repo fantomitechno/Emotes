@@ -4,6 +4,7 @@ import dev.renoux.emotes.config.ServerConfig;
 import dev.renoux.emotes.utils.EmoteProcessor;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.metadata.ModMetadata;
 import org.quiltmc.config.api.ConfigEnvironment;
 import org.quiltmc.config.api.serializers.TomlSerializer;
 import org.quiltmc.config.implementor_api.ConfigFactory;
@@ -14,14 +15,18 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class Emotes implements DedicatedServerModInitializer {
-    public static final String MODID = "emotes";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    public static ModMetadata metadata;
+    public static Logger LOGGER;
 
-    public static final ServerConfig serverConfig = ConfigFactory.create(new ConfigEnvironment(FabricLoader.getInstance().getConfigDir(), TomlSerializer.INSTANCE), MODID, MODID, Paths.get(""), builder -> {}, ServerConfig.class, builder -> {});
+    public static ServerConfig serverConfig;
 
     @Override
     public void onInitializeServer() {
-        LOGGER.info("Emotes : LOADING");
+        metadata = FabricLoader.getInstance().getModContainer("emotes").get().getMetadata();
+        LOGGER = LoggerFactory.getLogger(metadata.getId());
+        serverConfig = ConfigFactory.create(new ConfigEnvironment(FabricLoader.getInstance().getConfigDir(), TomlSerializer.INSTANCE), metadata.getId(), metadata.getId(), Paths.get(""), builder -> {}, ServerConfig.class, builder -> {});
+
+        LOGGER.info("{} : LOADING", metadata.getName());
 
         try {
             Events.init(false);
@@ -31,6 +36,6 @@ public class Emotes implements DedicatedServerModInitializer {
 
         EmoteProcessor.init();
 
-        LOGGER.info("Emotes : LOADED");
+        LOGGER.info("{} : LOADED", metadata.getName());
     }
 }

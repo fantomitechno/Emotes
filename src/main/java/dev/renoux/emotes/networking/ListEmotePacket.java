@@ -24,18 +24,17 @@
 package dev.renoux.emotes.networking;
 
 import dev.renoux.emotes.Emotes;
-import dev.renoux.emotes.util.EmoteUtil;
+import dev.renoux.emotes.utils.EmoteUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static dev.renoux.emotes.Emotes.LOGGER;
-import static dev.renoux.emotes.Emotes.MODID;
+import static dev.renoux.emotes.Emotes.metadata;
 
 public class ListEmotePacket  implements Packet<ListEmotePacket> {
-    public static final Type<ListEmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "emote_list"));
+    public static final Type<ListEmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(metadata.getId(), "emote_list"));
 
     private String nameAndHashArray;
     public ListEmotePacket(String nameAndHashArray) {

@@ -7,16 +7,20 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package dev.renoux.emotes.util;
+package dev.renoux.emotes.utils;
 
 import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.font.GlyphProvider;
 import com.mojang.blaze3d.font.SheetGlyphInfo;
 import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.textures.GpuTexture;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.ints.IntSets;
 import net.minecraft.client.gui.font.CodepointMap;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
+import net.minecraft.client.gui.font.providers.BitmapProvider;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
@@ -60,7 +64,7 @@ public class CustomImageFont implements GlyphProvider {
     return IntSets.unmodifiable(this.glyphs.keySet());
   }
 
-  public record CustomImageGlyph(float scaleFactor, NativeImage image, int x, int y, int width, int height, int advance, float ascent, String id) implements GlyphInfo
+  public record CustomImageGlyph(float scaleFactor, NativeImage image, int offsetX, int offsetY, int width, int height, int advance, float ascent, String id) implements GlyphInfo
   {
     @Override
     public float getAdvance() {
@@ -68,31 +72,28 @@ public class CustomImageFont implements GlyphProvider {
     }
 
     @Override
-    public BakedGlyph bake(Function<SheetGlyphInfo, BakedGlyph> function) {
-      return function.apply(new CustomImageRenderableGlyph(){
+    public @NotNull BakedGlyph bake(Function<SheetGlyphInfo, BakedGlyph> function) {
+      return function.apply(new CustomImageRenderableGlyph() {
         @Override
-        public float getOversample() {
-          return 1.0f / scaleFactor;
+        public String getId() {
+          return id();
         }
 
         @Override
         public int getPixelWidth() {
-          return width;
+          return width();
         }
 
         @Override
         public int getPixelHeight() {
-          return height;
+          return height();
         }
 
         @Override
-        public float getBearingTop() {
-          return CustomImageRenderableGlyph.super.getBearingTop() + 7.0f - ascent;
-        }
-
-        @Override
-        public void upload(int x, int y) {
-          image.upload(0, x, y, 0, 0, width, height, false, false);
+        public void upload(int x, int y, GpuTexture texture) {
+          RenderSystem.getDevice()
+                  .createCommandEncoder()
+                  .writeToTexture(texture, image, 0, x, y, width, height, offsetX, offsetY);
         }
 
         @Override
@@ -101,8 +102,8 @@ public class CustomImageFont implements GlyphProvider {
         }
 
         @Override
-        public String getId() {
-          return id;
+        public float getOversample() {
+          return 1.0f / scaleFactor;
         }
       });
     }

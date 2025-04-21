@@ -7,7 +7,7 @@
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package dev.renoux.emotes.util;
+package dev.renoux.emotes.utils;
 
 import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.font.GlyphProvider;
@@ -128,7 +128,7 @@ public class CustomImageFontStorage extends FontSet implements AutoCloseable {
     boolean bl = c.isColored();
 
     GlyphRenderTypes textRenderLayerSet = bl ? GlyphRenderTypes.createForColorTexture(identifier) : GlyphRenderTypes.createForIntensityTexture(identifier);
-    FontTexture glyphAtlasTexture2 = new FontTexture(textRenderLayerSet, bl);
+    FontTexture glyphAtlasTexture2 = new FontTexture(this.id::getPath, textRenderLayerSet, bl);
     this.glyphAtlases.add(glyphAtlasTexture2);
 
     Minecraft.getInstance().getTextureManager().register(identifier, glyphAtlasTexture2);

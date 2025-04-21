@@ -4,10 +4,10 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-import static dev.renoux.emotes.Emotes.MODID;
+import static dev.renoux.emotes.Emotes.metadata;
 
 public class AskEmotePacket implements Packet<AskEmotePacket> {
-    public static final Type<AskEmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(MODID, "ask_emotes"));
+    public static final Type<AskEmotePacket> PACKET = new Type<>(ResourceLocation.fromNamespaceAndPath(metadata.getId(), "ask_emotes"));
     public String name;
 
     @SuppressWarnings("unused")

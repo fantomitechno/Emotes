@@ -24,21 +24,26 @@
 package dev.renoux.emotes;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static dev.renoux.emotes.Emotes.LOGGER;
+import static dev.renoux.emotes.Emotes.*;
 
 public class EmotesClient implements ClientModInitializer {
 
   @Override
   public void onInitializeClient() {
-    LOGGER.info("EmotesClient : LOADING");
+    metadata = FabricLoader.getInstance().getModContainer("emotes").get().getMetadata();
+    LOGGER = LoggerFactory.getLogger(metadata.getId());
+
+    LOGGER.info("{} : LOADING", metadata.getName());
 
       try {
           Events.init(true);
       } catch (IOException ignored) {}
 
-      LOGGER.info("EmotesClient : LOADED");
+      LOGGER.info("{} : LOADED", metadata.getName());
   }
 }

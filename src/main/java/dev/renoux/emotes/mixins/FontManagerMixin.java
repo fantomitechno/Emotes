@@ -10,7 +10,7 @@
 package dev.renoux.emotes.mixins;
 
 import com.mojang.blaze3d.font.GlyphProvider;
-import dev.renoux.emotes.util.EmoteUtil;
+import dev.renoux.emotes.utils.EmoteUtil;
 import net.minecraft.client.gui.font.FontManager;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.resources.ResourceLocation;
@@ -26,20 +26,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 import java.util.Map;
 
+import static dev.renoux.emotes.Emotes.LOGGER;
+import static dev.renoux.emotes.Emotes.metadata;
+
 @Mixin(FontManager.class)
 public abstract class FontManagerMixin implements PreparableReloadListener, AutoCloseable {
 
-  @Shadow @Final private Map<ResourceLocation, FontSet> fontSets;
+    @Shadow @Final private Map<ResourceLocation, FontSet> fontSets;
 
-  @Shadow @Final private List<GlyphProvider> providersToClose;
+    @Shadow @Final private List<GlyphProvider> providersToClose;
 
-  @Inject(
-    method = "apply",
-    at=@At("TAIL")
-  )
-  private void reload(FontManager.Preparation preparation, ProfilerFiller profilerFiller, CallbackInfo ci) {
-    System.out.println("Added CustomImageFont");
-    this.providersToClose.add(EmoteUtil.getInstance().getCustomImageFont());
-    this.fontSets.put(EmoteUtil.CUSTOM_IMAGE_FONT_IDENTIFIER, EmoteUtil.getInstance().getCustomImageFontStorage());
-  }
+    @Inject(
+            method = "apply",
+            at=@At("TAIL")
+    )
+    private void reload(FontManager.Preparation preparation, ProfilerFiller profilerFiller, CallbackInfo ci) {
+        LOGGER.info("{} : Added CustomImageFont", metadata.getName());
+        this.providersToClose.add(EmoteUtil.getInstance().getCustomImageFont());
+        this.fontSets.put(EmoteUtil.CUSTOM_IMAGE_FONT_IDENTIFIER, EmoteUtil.getInstance().getCustomImageFontStorage());
+    }
 }

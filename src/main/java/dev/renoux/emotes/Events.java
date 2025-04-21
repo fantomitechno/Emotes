@@ -5,11 +5,12 @@ import dev.renoux.emotes.networking.AskEmotePacket;
 import dev.renoux.emotes.networking.EmotePacket;
 import dev.renoux.emotes.networking.ListEmotePacket;
 import dev.renoux.emotes.networking.Packet;
-import dev.renoux.emotes.util.CustomImageCache;
-import dev.renoux.emotes.util.EmoteUtil;
+import dev.renoux.emotes.utils.CustomImageCache;
+import dev.renoux.emotes.utils.EmoteUtil;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -29,7 +30,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static dev.renoux.emotes.Emotes.LOGGER;
-import static dev.renoux.emotes.Emotes.MODID;
+import static dev.renoux.emotes.Emotes.metadata;
 
 public class Events {
     private static String nameAndHashArray;
@@ -41,6 +42,7 @@ public class Events {
         if (!registeredPayload) loadPayloadRegistry();
         if (client) {
             initClientCustomPlayload();
+            initClientLogin();
         } else {
             initPlayerJoin();
             initCustomPayload();
@@ -50,7 +52,7 @@ public class Events {
             StringBuilder nameAndHash = new StringBuilder();
             for (String emote : emotes) {
                 String[] splitEmote = emote.split(":");
-                String path = "config/" + MODID + "/emotes/";
+                String path = "config/" + metadata.getId() + "/emotes/";
                 if (splitEmote[0].equals("nul")) {
                     path += "nul_.png";
                 } else {
@@ -62,7 +64,7 @@ public class Events {
                         emotesFiles.put(splitEmote[0], new FileInputStream(file).readAllBytes());
                         nameAndHash.append(splitEmote[0]).append(":").append(file.hashCode()).append(",");
                     } catch (Exception exception) {
-                        LOGGER.info("An error occurred while loading " + emote + " emote: " + exception.getMessage());
+                        LOGGER.info("{} : An error occurred while loading {} emote: {}", metadata.getName(), emote, exception.getMessage());
                         throw new IOException("An error occurred while loading \"" + emote + "\" emote: " + exception.getMessage());
                     }
                 } else {
@@ -124,15 +126,17 @@ public class Events {
 
                 for (CustomImageCache.CacheEntry cacheEntry : cached) {
                     new File(cacheEntry.path().toString()).delete();
-                    LOGGER.info("Removing " + cacheEntry.id());
+                    LOGGER.info("{} : Removing {}", metadata.getName(), cacheEntry.id());
                 }
 
                 for (String unknowEmote : unknownEmotes) {
-                    LOGGER.info("Asking for " + unknowEmote);
+                    LOGGER.info("{} : Asking for {}", metadata.getName(), unknowEmote);
                     FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
 
                     context.responseSender().sendPacket(new ServerboundCustomPayloadPacket(new AskEmotePacket(unknowEmote)));
                 }
+
+                EmoteUtil.getInstance().loadCache(ip);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -141,10 +145,8 @@ public class Events {
     }
 
     private static void initClientLogin() {
-        ClientLoginConnectionEvents.INIT.register((handler, client) -> {
+        ClientConfigurationConnectionEvents.COMPLETE.register((handler, client) -> {
             EmoteUtil.getInstance().reset();
-            if (client.getCurrentServer() != null)
-                EmoteUtil.getInstance().loadCache(sanitizeIP(client.getCurrentServer().ip));
         });
     }
 
