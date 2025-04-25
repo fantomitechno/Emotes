@@ -120,7 +120,7 @@ public class EmoteProcessor {
             }
         }
 
-        assert rootElement != null;
-        return rootElement.setStyle(format);
+        if (rootElement != null) return rootElement.setStyle(format);
+        else return Component.literal(message).setStyle(format);
     }
 }
