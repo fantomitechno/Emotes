@@ -124,9 +124,9 @@ public class EmoteUtil {
             codepoint = getAndAdvanceCurrentCodepoint();
         }
         // advance is the amount the text is moved forward after the character
-        int advance = (int) (image.getWidth() * CUSTOM_IMAGE_SCALE_FACTOR) + 1; // the +1 is to account for the shadow, which is a pixel in length
+        int advance = (int) (image.getWidth() * CUSTOM_IMAGE_SCALE_FACTOR); // the +1 is to account for the shadow, which is a pixel in length
         // ascent is the height of the glyph relative to something
-        int ascent = (int) (image.getHeight() * CUSTOM_IMAGE_SCALE_FACTOR);
+        float ascent = (float) image.getHeight() * CUSTOM_IMAGE_SCALE_FACTOR - 1f;
         // both advance and ascent seem to correlate pretty well with its scale factor
         this.getCustomImageFont().addGlyph(codepoint,
                 new CustomImageFont.CustomImageGlyph(CUSTOM_IMAGE_SCALE_FACTOR, image, 0, 0, image.getWidth(),
