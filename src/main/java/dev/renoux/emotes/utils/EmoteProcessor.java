@@ -41,7 +41,11 @@ public class EmoteProcessor {
         ValueList<String> emotes = Emotes.serverConfig.emotes.getRealValue();
         for (String emote : emotes) {
             String[] splitedEmote = emote.split(":");
-            EMOTES.put(splitedEmote[0], splitedEmote[1]);
+            if (splitedEmote[0] == "nul_") {
+                EMOTES.put("nul", splitedEmote[1]);
+            } else {
+                EMOTES.put(splitedEmote[0], splitedEmote[1]);
+            }
         }
     }
 
