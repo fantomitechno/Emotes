@@ -24,6 +24,8 @@
 package dev.renoux.emotes.mixins;
 
 import dev.renoux.emotes.utils.EmoteUtil;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -54,17 +56,19 @@ public abstract class TranslatableContentsMixin {
 
     @Redirect(method = "visit(Lnet/minecraft/network/chat/FormattedText$StyledContentConsumer;Lnet/minecraft/network/chat/Style;)Ljava/util/Optional;", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/FormattedText;visit(Lnet/minecraft/network/chat/FormattedText$StyledContentConsumer;Lnet/minecraft/network/chat/Style;)Ljava/util/Optional;"))
     private <T> Optional<T> visit(FormattedText instance, FormattedText.StyledContentConsumer<T> tStyledContentConsumer, Style style) {
-        if (this.getKey().startsWith("emotes.")) {
-            LOGGER.info("{} : Visiting that '{}'", metadata.getName(), instance.getString());
-            String[] splitEmote = instance.getString().split(":");
-            Integer codepoint = EmoteUtil.getInstance().getCodepoint(splitEmote[0].replace("emotes.", ""));
-            if (codepoint == null) {
-                // Fix from @Juloos
-                return FormattedText.of(splitEmote[splitEmote.length - 1]).visit(tStyledContentConsumer, style);
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            if (this.getKey().startsWith("emotes.")) {
+                LOGGER.info("{} : Visiting that '{}'", metadata.getName(), instance.getString());
+                String[] splitEmote = instance.getString().split(":");
+                Integer codepoint = EmoteUtil.getInstance().getCodepoint(splitEmote[0].replace("emotes.", ""));
+                if (codepoint == null) {
+                    // Fix from @Juloos
+                    return FormattedText.of(splitEmote[splitEmote.length - 1]).visit(tStyledContentConsumer, style);
+                }
+                String emote = Character.toString(codepoint);
+                FormattedText newInstance = FormattedText.of(emote);
+                return newInstance.visit(tStyledContentConsumer, style.withFont(EmoteUtil.CUSTOM_IMAGE_FONT_IDENTIFIER).withHoverEvent(new HoverEvent.ShowText(Component.literal(splitEmote[1]))));
             }
-            String emote = Character.toString(codepoint);
-            FormattedText newInstance = FormattedText.of(emote);
-            return newInstance.visit(tStyledContentConsumer, style.withFont(EmoteUtil.CUSTOM_IMAGE_FONT_IDENTIFIER).withHoverEvent(new HoverEvent.ShowText(Component.literal(splitEmote[1]))));
         }
         return instance.visit(tStyledContentConsumer, style);
     }
