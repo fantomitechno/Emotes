@@ -27,6 +27,7 @@ import com.mojang.authlib.GameProfile;
 import dev.renoux.emotes.utils.EmoteProcessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -54,7 +55,13 @@ public abstract class ServerPlayerMixin extends Player {
     @Inject(method = "sendSystemMessage(Lnet/minecraft/network/chat/Component;)V", at = @At("HEAD"), cancellable = true)
     private void onSendMessage(Component message, CallbackInfo ci) {
         if (message.toFlatList().isEmpty()) {
-            this.sendSystemMessage(EmoteProcessor.processMessage(message.getString(), message.getStyle()), false);
+            if (message.getContents() instanceof TranslatableContents) {
+                // If the message is a translation key, we don't want to process it
+                this.sendSystemMessage(message, false);
+            } else {
+                // Process the message normally
+                this.sendSystemMessage(EmoteProcessor.processMessage(message.getString(), message.getStyle()), false);
+            }
         } else {
             this.sendSystemMessage(processSiblings(message.toFlatList()), false);
         }
@@ -87,7 +94,13 @@ public abstract class ServerPlayerMixin extends Player {
             if (!sibling.getSiblings().isEmpty()) {
                 newSibling = processSiblings(sibling.toFlatList());
             } else {
-                newSibling = EmoteProcessor.processMessage(sibling.getString(), sibling.getStyle());
+                if (sibling.getContents() instanceof TranslatableContents) {
+                    // If the sibling is a translation key, we don't want to process it
+                    newSibling = sibling;
+                } else {
+                    // Process the sibling normally
+                    newSibling = EmoteProcessor.processMessage(sibling.getString(), sibling.getStyle());
+                }
             }
             newComponent.append(newSibling);
         }
