@@ -71,6 +71,11 @@ public class CustomImageFont implements GlyphProvider {
     }
 
     @Override
+    public float getShadowOffset() {
+      return 0.0f;
+    }
+
+    @Override
     public @NotNull BakedGlyph bake(Function<SheetGlyphInfo, BakedGlyph> function) {
       return function.apply(new CustomImageRenderableGlyph() {
         @Override

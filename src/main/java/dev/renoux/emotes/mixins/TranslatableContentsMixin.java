@@ -23,6 +23,7 @@
  */
 package dev.renoux.emotes.mixins;
 
+import dev.renoux.emotes.utils.EmoteProcessor;
 import dev.renoux.emotes.utils.EmoteUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -39,9 +40,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Optional;
 
-import static dev.renoux.emotes.Emotes.LOGGER;
-import static dev.renoux.emotes.Emotes.metadata;
-
 @Mixin(TranslatableContents.class)
 public abstract class TranslatableContentsMixin {
     @Shadow public abstract String getKey();
@@ -56,9 +54,9 @@ public abstract class TranslatableContentsMixin {
 
     @Redirect(method = "visit(Lnet/minecraft/network/chat/FormattedText$StyledContentConsumer;Lnet/minecraft/network/chat/Style;)Ljava/util/Optional;", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/FormattedText;visit(Lnet/minecraft/network/chat/FormattedText$StyledContentConsumer;Lnet/minecraft/network/chat/Style;)Ljava/util/Optional;"))
     private <T> Optional<T> visit(FormattedText instance, FormattedText.StyledContentConsumer<T> tStyledContentConsumer, Style style) {
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            if (this.getKey().startsWith("emotes.")) {
-                String[] splitEmote = instance.getString().split(":");
+        if (this.getKey().startsWith("emotes.")) {
+            String[] splitEmote = instance.getString().split(":");
+            if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
                 Integer codepoint = EmoteUtil.getInstance().getCodepoint(splitEmote[0].replace("emotes.", ""));
                 if (codepoint == null) {
                     // Fix from @Juloos
@@ -67,6 +65,8 @@ public abstract class TranslatableContentsMixin {
                 String emote = Character.toString(codepoint);
                 FormattedText newInstance = FormattedText.of(emote);
                 return newInstance.visit(tStyledContentConsumer, style.withFont(EmoteUtil.CUSTOM_IMAGE_FONT_IDENTIFIER).withHoverEvent(new HoverEvent.ShowText(Component.literal(splitEmote[1]))));
+            } else {
+                return FormattedText.of(splitEmote[splitEmote.length - 1]).visit(tStyledContentConsumer, style);
             }
         }
         return instance.visit(tStyledContentConsumer, style);

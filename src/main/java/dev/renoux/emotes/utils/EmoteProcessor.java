@@ -34,14 +34,14 @@ import java.util.Map;
 
 public class EmoteProcessor {
 
-    private static Map<String, String> EMOTES = new HashMap<>();
+    public static Map<String, String> EMOTES = new HashMap<>();
 
     public static void init() {
         EMOTES = new HashMap<>();
         ValueList<String> emotes = Emotes.serverConfig.emotes.getRealValue();
         for (String emote : emotes) {
             String[] splitedEmote = emote.split(":");
-            if (splitedEmote[0] == "nul_") {
+            if (splitedEmote[0].equals("nul_")) {
                 EMOTES.put("nul", splitedEmote[1]);
             } else {
                 EMOTES.put(splitedEmote[0], splitedEmote[1]);

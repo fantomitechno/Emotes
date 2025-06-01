@@ -39,7 +39,7 @@ public class EmoteUtil {
     public static final ResourceLocation CUSTOM_IMAGE_FONT_IDENTIFIER = ResourceLocation.fromNamespaceAndPath(metadata.getId(), "emote_font");
 
     // I've found this is a pretty good scale factor for 24x24px Twitch emotes.
-    public static final float CUSTOM_IMAGE_SCALE_FACTOR = 0.08f;
+    public static final float CUSTOM_IMAGE_SCALE_FACTOR = 0.07f;
 
     private final CustomImageFont customImageFont;
     private final CustomImageFontStorage customImageFontStorage;
