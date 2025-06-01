@@ -58,7 +58,6 @@ public abstract class TranslatableContentsMixin {
     private <T> Optional<T> visit(FormattedText instance, FormattedText.StyledContentConsumer<T> tStyledContentConsumer, Style style) {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             if (this.getKey().startsWith("emotes.")) {
-                LOGGER.info("{} : Visiting that '{}'", metadata.getName(), instance.getString());
                 String[] splitEmote = instance.getString().split(":");
                 Integer codepoint = EmoteUtil.getInstance().getCodepoint(splitEmote[0].replace("emotes.", ""));
                 if (codepoint == null) {
