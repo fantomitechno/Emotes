@@ -74,7 +74,8 @@ public class EmoteProcessor {
 
                     String emoteName = textBuilder.substring(emoteStartIndex + 1, textBuilder.length() - 1);
                     String emote = EMOTES.get(emoteName);
-                    if (emote != null) { // Valid emote name, proceeding translation
+                    if (emote != null) {
+                        // Valid emote name, proceeding translation
                         // Strip emote from text builder
                         textBuilder.delete(emoteStartIndex, textBuilder.length());
 
@@ -105,6 +106,11 @@ public class EmoteProcessor {
                         }
 
                         textBuilder.delete(0, textBuilder.length()); // Clear string builder
+                    }
+
+                    else {
+                        readingEmoteName = true;
+                        emoteStartIndex = textBuilder.length() - 1;
                     }
                 }
             }
