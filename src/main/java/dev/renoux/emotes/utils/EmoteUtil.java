@@ -145,7 +145,7 @@ public class EmoteUtil {
         currentCodepoint++;
         // Skip the space (' ') codepoint, because the TextRenderer does weird stuff with the space character
         // (like it doesn't get obfuscated and stuff).
-        if (currentCodepoint == 32) currentCodepoint++;
+        if (currentCodepoint == 32 || currentCodepoint == 10) currentCodepoint++;
         return prevCodepoint;
     }
     public Integer getCodepoint(String id) {
