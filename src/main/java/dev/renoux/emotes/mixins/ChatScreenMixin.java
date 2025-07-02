@@ -31,7 +31,7 @@ public class ChatScreenMixin {
     }
 
 
-    @Inject(method = "render", at = @At("HEAD"))
+    @Inject(method = "render", at = @At("TAIL"))
     public void render(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
         if (emojiSuggestionHelper != null && EmoteUtil.getInstance().showSuggestions()) emojiSuggestionHelper.render(guiGraphics);
     }
