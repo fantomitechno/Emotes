@@ -23,7 +23,6 @@
  */
 package dev.renoux.emotes.mixins;
 
-import dev.renoux.emotes.utils.EmoteProcessor;
 import dev.renoux.emotes.utils.EmoteUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;

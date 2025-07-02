@@ -25,7 +25,6 @@ package dev.renoux.emotes.mixins;
 
 import com.mojang.authlib.GameProfile;
 import dev.renoux.emotes.utils.EmoteProcessor;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.*;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,8 +42,8 @@ import java.util.List;
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin extends Player {
 
-    public ServerPlayerMixin(Level world, BlockPos pos, float yaw, GameProfile gameProfile) {
-        super(world, pos, yaw, gameProfile);
+    public ServerPlayerMixin(Level world, GameProfile gameProfile) {
+        super(world, gameProfile);
     }
 
     @Shadow public abstract void sendSystemMessage(Component message, boolean overlay);

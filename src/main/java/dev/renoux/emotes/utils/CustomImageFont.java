@@ -97,7 +97,7 @@ public class CustomImageFont implements GlyphProvider {
         public void upload(int x, int y, GpuTexture texture) {
           RenderSystem.getDevice()
                   .createCommandEncoder()
-                  .writeToTexture(texture, image, 0, x, y, width, height, offsetX, offsetY);
+                  .writeToTexture(texture, image, 0, texture.getDepthOrLayers() - 1, x, y, width, height, offsetX, offsetY);
         }
 
         @Override

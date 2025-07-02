@@ -75,13 +75,13 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
         return suggestionBuilder.build();
     }
 
-    private static int getLastWordIndex(String p_228121_0_) {
-        if (Strings.isNullOrEmpty(p_228121_0_)) {
+    private static int getLastWordIndex(String this_variable_exists_apparently) {
+        if (Strings.isNullOrEmpty(this_variable_exists_apparently)) {
             return 0;
         } else {
             int i = 0;
 
-            for (Matcher matcher = WHITESPACE_PATTERN.matcher(p_228121_0_); matcher.find(); i = matcher.end()) {
+            for (Matcher matcher = WHITESPACE_PATTERN.matcher(this_variable_exists_apparently); matcher.find(); i = matcher.end()) {
 
             }
 
