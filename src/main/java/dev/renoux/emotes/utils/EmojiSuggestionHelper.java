@@ -59,6 +59,8 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
     private boolean updating;
     private String inputFieldTextLast;
 
+    private boolean render = false;
+
     public EmojiSuggestionHelper(ChatScreen  screen) {
         this.chatScreen = screen;
         this.updating = false;
@@ -95,6 +97,9 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == 262 || keyCode == 263) {
+            render = false;
+        }
         if (this.suggestions != null && this.suggestions.onKeyPressed(keyCode)) {
             return true;
         } else if (keyCode == 258) {
@@ -112,7 +117,6 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
             this.chatScreen.input.setSuggestion(null);
             this.suggestions = null;
         }
-
         final StringReader stringreader = new StringReader(s);
         if (stringreader.canRead()) {
             final int cursorPosition = this.chatScreen.input.getCursorPosition();
@@ -137,14 +141,15 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
             if (!suggestions.getList().isEmpty()) {
                 for (final Suggestion suggestion : suggestions.getList())
                     i = Math.max(i, Minecraft.getInstance().font.width(suggestion.getText()));
-                final int j = Minecraft.getInstance().font.width(this.chatScreen.input.getValue().substring(0, this.chatScreen.input.getCursorPosition() - suggestions.getRange().getLength() + 2));
+                String text = suggestions.getRange().getLength() == 1 ? this.chatScreen.input.getValue() + "thisisdebugcodedontlookatit" : this.chatScreen.input.getValue();
+                final int j = Minecraft.getInstance().font.width(text.substring(0, this.chatScreen.input.getCursorPosition() - suggestions.getRange().getLength() + 2));
                 this.suggestions = new EmojiSuggestions(j, this.chatScreen.height - 12, i, suggestions);
             }
         }
     }
 
     public void render(GuiGraphics matrixStack) {
-        if (this.suggestions != null) {
+        if (this.suggestions != null && render) {
             this.suggestions.render(matrixStack);
         }
         checkTextUpdate();
@@ -193,6 +198,9 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
         }
 
         public boolean onKeyPressed(int keyCode) {
+            if (suggestions.getRange().getLength() > 1) {
+                EmojiSuggestionHelper.this.render = true;
+            }
             if (keyCode == 265) {
                 offsetIndex(-1);
                 return true;
@@ -200,17 +208,20 @@ public class EmojiSuggestionHelper extends IDrawableGuiListener {
                 offsetIndex(1);
                 return true;
             } else if (keyCode == 258) {
-                applySuggestion();
+                if (suggestions.getRange().getLength() > 1) applySuggestion();
+                EmojiSuggestionHelper.this.render = true;
                 return true;
-            } else if ((keyCode == 257 || keyCode == 335)) {
+            } else if ((keyCode == 257 || keyCode == 335) && suggestions.getRange().getLength() > 1) {
                 applySuggestion();
                 return true;
             } else if (keyCode == 256) {
                 removeSuggestion();
+                EmojiSuggestionHelper.this.render = false;
                 return true;
             } else if ((keyCode == 262 || keyCode == 263)) {
                 EmojiSuggestionHelper.this.chatScreen.input.setSuggestion("");
                 removeSuggestion();
+                EmojiSuggestionHelper.this.render = false;
                 return false;
             } else
                 return false;
